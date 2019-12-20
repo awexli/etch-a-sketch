@@ -65,24 +65,45 @@ function changeDimension() {
   const width = document.getElementById('width');
   const height = document.getElementById('height');
   const changeButton = document.querySelector('#change');
-  
+
   changeButton.addEventListener('click', () => {
-    if (width.value != 0 && height.value != 0){
-      removeGrid();
-      createGrid(width.value, height.value);
-    } else {
-      removeGrid();
-      createGrid(16,16);
+    if (inputCheck(width.value, height.value)) {
+      if (width.value != 0 && height.value != 0){
+        removeGrid();
+        createGrid(width.value, height.value);
+      } else {
+        removeGrid();
+        createGrid(16,16);
+      }
+      width.value = "";
+      height.value = "";
     }
-    
   })
 }
 
 function removeGrid() {
   let removeRows = document.querySelectorAll('.row');
-    removeRows.forEach(row => {
-      row.remove();
+  removeRows.forEach(row => {
+    row.remove();
   });
+}
+
+function inputCheck(width, height) {
+  let message = document.getElementById("msg");
+  message.innerHTML = "";
+  try {
+    if(width == "" || height == "") throw "empty";
+    if(isNaN(width) || isNaN(height)) throw "not a number";
+    width = Number(width);
+    height = Number(height);
+    if(width < 1 || height < 1) throw "too low";
+    if(width > 16 || height > 16) throw "too high";
+    return true;
+  }
+  catch(err) {
+    message.innerHTML = "An input is " + err;
+    return false;
+  }
 }
 
 function init() {
