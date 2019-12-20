@@ -4,22 +4,20 @@ body{
   align-items: center;
   background-color: grey;
 }
-.container {
-  margin: 0 auto;
-}
 
 .row {
   display: flex;
 }
 
 .square {
-  border: 0.5px solid black;
+  border: 0.2px solid grey;
   background-color: white;
   padding: 1rem;
 }
 
 .button {
   margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 #options {

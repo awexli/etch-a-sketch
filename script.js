@@ -1,4 +1,4 @@
-function createRow() {
+function createRow(size) {
   const container = document.querySelector('#container');
 
   const row = document.createElement('div');
@@ -6,17 +6,19 @@ function createRow() {
 
   const square = document.createElement('div');
   square.classList.add('square');
+  scaleSquare(square, size)
   addListener(square);
 
   row.appendChild(square);
   container.appendChild(row);
 }
 
-function createColumn() {
+function createColumn(size) {
   const row = document.querySelectorAll('.row');
   row.forEach(rows => {
     const square = document.createElement('div');
     square.classList.add('square');
+    scaleSquare(square, size)
     addListener(square);
 
     rows.appendChild(square);
@@ -28,11 +30,11 @@ function createGrid(width, height) {
   let column = 0;
 
   for (row; row < height; row++) {
-    createRow();
+    createRow(width);
   }
 
   for (column; column < width - 1; column++) {
-    createColumn();
+    createColumn(width);
   }
 }
 
@@ -62,21 +64,14 @@ function resetGrid() {
 }
 
 function changeDimension() {
-  const width = document.getElementById('width');
-  const height = document.getElementById('height');
+  const dimension = document.getElementById('dimension');
   const changeButton = document.querySelector('#change');
 
   changeButton.addEventListener('click', () => {
-    if (inputCheck(width.value, height.value)) {
-      if (width.value != 0 && height.value != 0){
-        removeGrid();
-        createGrid(width.value, height.value);
-      } else {
-        removeGrid();
-        createGrid(16,16);
-      }
-      width.value = "";
-      height.value = "";
+    if (inputCheck(dimension.value)) {
+      removeGrid();
+      createGrid(dimension.value, dimension.value);
+      dimension.value = "";
     }
   })
 }
@@ -88,22 +83,25 @@ function removeGrid() {
   });
 }
 
-function inputCheck(width, height) {
+function inputCheck(dimension) {
   let message = document.getElementById("msg");
   message.innerHTML = "";
   try {
-    if(width == "" || height == "") throw "empty";
-    if(isNaN(width) || isNaN(height)) throw "not a number";
-    width = Number(width);
-    height = Number(height);
-    if(width < 1 || height < 1) throw "too low";
-    if(width > 16 || height > 16) throw "too high";
+    if(dimension == "") throw "empty";
+    if(isNaN(dimension)) throw "not a number";
+    dimension = Number(dimension);
+    if(dimension < 1) throw "too low";
     return true;
   }
   catch(err) {
-    message.innerHTML = "An input is " + err;
+    message.innerHTML = "Input is " + err;
     return false;
   }
+}
+
+function scaleSquare(square, size) {
+  let newPadding = 256/size;
+  square.style.padding = `${newPadding}px`;
 }
 
 function init() {
