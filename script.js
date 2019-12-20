@@ -51,13 +51,44 @@ function getRandomColor() {
   return color;
 }
 
-const reset = document.querySelector('.button');
-reset.addEventListener('click', () => {
-  const allSquares = document.querySelectorAll('.square');
-  allSquares.forEach(square => {
-    square.style.backgroundColor = "red";
+function resetGrid() {
+  const reset = document.querySelector('.button');
+  reset.addEventListener('click', () => {
+    const allSquares = document.querySelectorAll('.square');
+    allSquares.forEach(square => {
+      square.style.backgroundColor = "white";
+    });
+  })
+}
+
+function changeDimension() {
+  const width = document.getElementById('width');
+  const height = document.getElementById('height');
+  const changeButton = document.querySelector('#change');
+  
+  changeButton.addEventListener('click', () => {
+    if (width.value != 0 && height.value != 0){
+      removeGrid();
+      createGrid(width.value, height.value);
+    } else {
+      removeGrid();
+      createGrid(16,16);
+    }
+    
+  })
+}
+
+function removeGrid() {
+  let removeRows = document.querySelectorAll('.row');
+    removeRows.forEach(row => {
+      row.remove();
   });
-})
+}
 
+function init() {
+  createGrid(16,16);
+  resetGrid();
+  changeDimension();
+}
 
-createGrid(16,16);
+init();
