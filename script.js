@@ -4,25 +4,36 @@ function createRow() {
   const row = document.createElement('div');
   row.classList.add('row');
 
-  const grid = document.createElement('div');
-  grid.classList.add('grid');
+  const square = document.createElement('div');
+  square.classList.add('square');
 
-  row.appendChild(grid);
+  row.appendChild(square);
 
   container.appendChild(row);
 }
 
 function createColumn() {
-  const row = document.querySelector('.row');
-  const grid = document.createElement('div');
-  grid.classList.add('grid');
+  const row = document.querySelectorAll('.row');
+  row.forEach(rows => {
+    const square = document.createElement('div');
+    square.classList.add('square');
 
-  row.appendChild(grid);
+    rows.appendChild(square);
+  })
 }
 
-for (let i = 0; i < 16; i++) {
-  createColumn();
+function createGrid(width, height) {
+  let row = 0;
+  let column = 0;
+  
+  for (row; row < height; row++) {
+    createRow();
+  }
+
+  for (column; column < width - 1; column++) {
+    createColumn();
+  }
 }
 
 
-
+createGrid(16,16);
