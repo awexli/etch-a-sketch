@@ -51,5 +51,13 @@ function getRandomColor() {
   return color;
 }
 
+const reset = document.querySelector('.button');
+reset.addEventListener('click', () => {
+  const allSquares = document.querySelectorAll('.square');
+  allSquares.forEach(square => {
+    square.style.backgroundColor = "red";
+  });
+})
+
 
 createGrid(16,16);
